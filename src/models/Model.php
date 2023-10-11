@@ -44,8 +44,10 @@ class Model {
     }
 
     public static function getResultSetFromSelect($filters = [], $columns = '*') {
-        $sql = "SELECT ${columns} FROM " . static::$tableName . static::getFilters($filters);
-        $result = Database::getRresultFromQuery($sql);
+        $sql = "SELECT ${columns} FROM "
+            . static::$tableName
+            . static::getFilters($filters);
+        $result = Database::getResultFromQuery($sql);
         if($result->num_rows === 0) {
             return null;
         } else {
@@ -55,12 +57,16 @@ class Model {
 
     private static function getFilters($filters) {
         $sql = '';
-        if(count($filters) > 0){
+        if(count($filters) > 0) {
             $sql .= " WHERE 1 = 1";
             foreach($filters as $column => $value) {
-                $sql .= " AND ${column} = " . static::getFormatedValue($value);
+                if($column == 'raw') {
+                    $sql .= " AND {$value}";
+                } else {
+                    $sql .= " AND ${column} = " . static::getFormatedValue($value);
+                }
             }
-        }
+        } 
         return $sql;
     }
 
@@ -73,5 +79,4 @@ class Model {
             return $value;
         }
     }
-
 }
