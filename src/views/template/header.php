@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="assets/css/template.css">
     <title>In 'n Out</title>
 </head>
-<body>
+<body class="hide-sidebar">
     <header class="header">
         <div class="logo">
             <i class="icofont-travelling mr-2"></i>
@@ -23,4 +23,20 @@
             <i class="icofont-navigation-menu"></i>
         </div>
         <div class="spacer"></div>
+        <div class="dropdown">
+            <div class="dropdown-button">
+                <span class="ml-3">Usuário</span>
+                <i class="icofont-simple-down mx-2"></i>
+                <div class="dropdown-content">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="lofout.php">
+                                <i class="icofont-logout mr-2"></i>
+                                Sair
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </header>
