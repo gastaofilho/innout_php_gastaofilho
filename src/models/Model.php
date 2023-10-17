@@ -5,8 +5,8 @@ class Model {
     protected static $columns = [];
     protected $values = [];
 
-    function __construct($arr) {
-        $this->loadFromArray($arr);
+    function __construct($arr, $sanitize = true) {
+        $this->loadFromArray($arr, $sanitize);
     }
 
     public function loadFromArray($arr) {
@@ -18,11 +18,15 @@ class Model {
     }
 
     public function __get($key) {
-        return $this->$values[$key];
+        return $this->values[$key];
     }
 
     public function __set($key, $value) {
-        return $this->values[$key] = $value;
+        $this->values[$key] = $value;
+    }
+
+    public function getValues() {
+        return $this->values;
     }
 
     public static function getOne($filters = [], $columns = '*') {
@@ -66,7 +70,7 @@ class Model {
                     $sql .= " AND ${column} = " . static::getFormatedValue($value);
                 }
             }
-        } 
+        }
         return $sql;
     }
 
