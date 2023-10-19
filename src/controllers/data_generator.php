@@ -3,7 +3,7 @@
 loadModel('WorkingHours');
 
 Database::executeSQL('DELETE FROM working_hours');
-Database::executeSQl('DELETE FROM users WHERE id > 5');
+Database::executeSQL('DELETE FROM users WHERE id > 5');
 
 function getDayTemplateByOdds($regularRate, $extraRate, $lazyRate) {
     $regularDayTemplate = [
@@ -44,10 +44,10 @@ function populateWorkingHours($userId, $initialDate, $regularRate, $extraRate, $
     $currentDate = $initialDate;
     $yesterday = new DateTime();
     $yesterday->modify('-1 day');
-    $columns = ['user_id' => $userId, 'working_date' => $currentDate];
+    $columns = ['user_id' => $userId, 'work_date' => $currentDate];
 
-    while(isBefore($currentDate, $yesterday)){
-        if(!isWekeend($currentDate)) {
+    while(isBefore($currentDate, $yesterday)) {
+        if(!isWeekend($currentDate)) {
             $template = getDayTemplateByOdds($regularRate, $extraRate, $lazyRate);
             $columns = array_merge($columns, $template);
             $workingHours = new WorkingHours($columns);
@@ -58,6 +58,10 @@ function populateWorkingHours($userId, $initialDate, $regularRate, $extraRate, $
     }
 }
 
+$lastMonth = strtotime('first day of last month');
+
 populateWorkingHours(1, date('Y-m-1'), 70, 20, 10);
+populateWorkingHours(3, date('Y-m-d', $lastMonth), 20, 75, 5);
+populateWorkingHours(4, date('Y-m-d', $lastMonth), 20, 10, 70);
 
 echo 'Tudo ok';

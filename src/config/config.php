@@ -3,7 +3,7 @@
 date_default_timezone_set('America/Sao_Paulo');
 setlocale(LC_TIME, 'pt_BR', 'pt_BR.uft-8', 'portuguese');
 
-//Constantes Gerais
+// Constantes gerais
 define('DAILY_TIME', 60 * 60 * 8);
 
 // Pastas
@@ -21,5 +21,6 @@ require_once(realpath(dirname(__FILE__) . '/date_utils.php'));
 require_once(realpath(dirname(__FILE__) . '/utils.php'));
 require_once(realpath(MODEL_PATH . '/Model.php'));
 require_once(realpath(MODEL_PATH . '/User.php'));
+require_once(realpath(MODEL_PATH . '/WorkingHours.php'));
 require_once(realpath(EXCEPTION_PATH . '/AppException.php'));
 require_once(realpath(EXCEPTION_PATH . '/ValidationException.php'));

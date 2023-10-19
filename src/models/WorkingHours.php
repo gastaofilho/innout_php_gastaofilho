@@ -1,4 +1,5 @@
 <?php
+
 class WorkingHours extends Model {
     protected static $tableName = 'working_hours';
     protected static $columns = [
@@ -22,14 +23,15 @@ class WorkingHours extends Model {
                 'worked_time' => 0
             ]);
         }
+
         return $registry;
     }
 
-    public function getNextTime(){
-        if(!this->time1) return 'time1';
-        if(!this->time2) return 'time2';
-        if(!this->time3) return 'time3';
-        if(!this->time4) return 'time4';
+    public function getNextTime() {
+        if(!$this->time1) return 'time1';
+        if(!$this->time2) return 'time2';
+        if(!$this->time3) return 'time3';
+        if(!$this->time4) return 'time4';
         return null;
     }
 
