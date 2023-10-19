@@ -14,18 +14,18 @@
         </div>
         <div class="card-body">
             <div class="d-flex m-5 justify-content-around">
-                <span class="record">Entrada 1: ---</span>
-                <span class="record">Saida 1: ---</span>
+                <span class="record">Entrada 1: <?= $workingHours->time1 ?? '---' ?></span>
+                <span class="record">Saída 1: <?= $workingHours->time2 ?? '---' ?></span>
             </div>
             <div class="d-flex m-5 justify-content-around">
-                <span class="record">Entrada 2: ---</span>
-                <span class="record">Saida 2: ---</span>
+                <span class="record">Entrada 2: <?= $workingHours->time3 ?? '---' ?></span>
+                <span class="record">Saída 2: <?= $workingHours->time4 ?? '---' ?></span>
             </div>
         </div>
         <div class="card-footer d-flex justify-content-center">
-            <a href="???" class="btn btn-success btn-lg">
+            <a href="innout.php" class="btn btn-success btn-lg">
                 <i class="icofont-check mr-1"></i>
-                Bater Ponto
+                Bater o Ponto
             </a>
         </div>
     </div>
