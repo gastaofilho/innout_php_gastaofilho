@@ -1,3 +1,3 @@
 <?php
 
-print_r(getLastDayOfMonth(new DateTime()));
+echo User::getCount();
