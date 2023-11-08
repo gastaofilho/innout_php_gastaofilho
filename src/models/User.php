@@ -22,4 +22,45 @@ class User extends Model {
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         return parent::insert();
     }
+
+    private function validate() {
+        $errors = [];
+
+        if(!this->name) {
+            $errors['name'] = 'Nome é um campo obrigattório';
+        }
+
+        if(!this->email) {
+            $errors['email'] = 'Email é um campo obrigattório';
+        } elseif(!filter_var(this->email, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = 'Email inválido';
+        }
+
+        if(!this->start_date) {
+            $errors['start_date'] = 'Data de admissão é um campo obrigattório';
+        } elseif(!DateTime::createFromFormat('Y-m-d', $this->stard_date)){
+            $errors['start_date'] = 'Data de admissão deve estar no padrão dd/mm/aaaa.';
+        }
+
+        if($this->end_date && !DateTime::createFromFormat('Y-m-d', $this->stard_date)){
+            $errors['end_date'] = 'Data de desligamento deve estar no padrão dd/mm/aaaa.';
+        }
+        
+        if(!this->password) {
+            $errors['password'] = 'Senha é um campo obrigattório';
+        }
+        
+        if(!this->confirm_password) {
+            $errors['confirm_password'] = 'Confirmação de senha é um campo obrigattório';
+        }
+                
+        if(this->password && this->confirm_password && this->password !== this->confirm_password) {
+            $errors['password'] = 'AS senhas não são iguais';
+            $errors['confirm_password'] = 'AS senhas não são iguais';
+        }
+
+        if(count($errors) > 0) {
+            throw new ValidationException($errors);
+        }
+    }
 }
