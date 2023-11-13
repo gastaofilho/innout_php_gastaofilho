@@ -29,7 +29,7 @@ $workDay = 0;
 $sumOfWorkedTime = 0;
 $lasDay = getLastDayOfMonth($selectedPeriod)->format('d');
 
-for($day = 1; $day <= $lasDay, $day++) {
+for($day = 1; $day <= $lasDay; $day++) {
     $day = $selectedPeriod . '-' . sprintf('%02d', $day);
     $registry = $registries[$date];
 
@@ -37,11 +37,11 @@ for($day = 1; $day <= $lasDay, $day++) {
 
     if($registry) {
         $sumOfWorkedTime += $registry->worked_time;
-        array_push($report, $registry)
+        array_push($report, $registry);
     } else {
         array_push($report,  new WorkingHours([
             'work_date' => $date,
-            'worked_time' => 0,
+            'worked_time' => 0
         ]));
     }
 }

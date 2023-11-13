@@ -35,22 +35,22 @@ class User extends Model {
         $errors = [];
 
         if(!this->name) {
-            $errors['name'] = 'Nome é um campo obrigattório';
+            $errors['name'] = 'Nome é um campo obrigatório';
         }
 
         if(!this->email) {
-            $errors['email'] = 'Email é um campo obrigattório';
+            $errors['email'] = 'Email é um campo obrigatório';
         } elseif(!filter_var(this->email, FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = 'Email inválido';
         }
 
         if(!this->start_date) {
-            $errors['start_date'] = 'Data de admissão é um campo obrigattório';
+            $errors['start_date'] = 'Data de admissão é um campo obrigatório';
         } elseif(!DateTime::createFromFormat('Y-m-d', $this->stard_date)){
             $errors['start_date'] = 'Data de admissão deve estar no padrão dd/mm/aaaa.';
         }
 
-        if($this->end_date && !DateTime::createFromFormat('Y-m-d', $this->stard_date)){
+        if($this->end_date && !DateTime::createFromFormat('Y-m-d', $this->end_date)){
             $errors['end_date'] = 'Data de desligamento deve estar no padrão dd/mm/aaaa.';
         }
         
@@ -59,7 +59,7 @@ class User extends Model {
         }
         
         if(!this->confirm_password) {
-            $errors['confirm_password'] = 'Confirmação de senha é um campo obrigattório';
+            $errors['confirm_password'] = 'Confirmação de senha é um campo obrigatório';
         }
                 
         if(this->password && this->confirm_password && this->password !== this->confirm_password) {

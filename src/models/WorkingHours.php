@@ -68,15 +68,14 @@ class WorkingHours extends Model {
 
         if($t1) $part1 = $t1->diff(new DateTime());
         if($t2) $part1 = $t1->diff($t2);
-        if($t3) $part2 = $t1->diff(new DateTime());
-        if($t4) $part2 = $t1->diff($t4);
+        if($t3) $part2 = $t3->diff(new DateTime());
+        if($t4) $part2 = $t3->diff($t4);
 
         return sumIntervals($part1, $part2);
     }
 
     function getLunchInterval() {
         [, $t2, $t3,] = $this->getTimes();
-
         $lunchInterval = new DateInterval('PT0S');
 
         if($t2) $lunchInterval = $t2->diff(new DateTime());
@@ -87,22 +86,21 @@ class WorkingHours extends Model {
 
     function getExitTime() {
         [$t1,,, $t4] = $this->getTimes();
-        $workDay = DateInterval::createFromDateString('8 hours');
+        $workday = DateInterval::createFromDateString('8 hours');
 
         if(!$t1) {
-            return (new DateTimeImmutable())->add($workDay);
+            return (new DateTimeImmutable())->add($workday);
         } elseif($t4) {
             return $t4;
         } else {
-            $total = sumIntervals($workDay, $this->getLunchInterval());
+            $total = sumIntervals($workday, $this->getLunchInterval());
             return $t1->add($total);
         }
-
     }
 
     function getBalance() {
-        if(!this->time1 && !isPastWorkday(this->work_date)) return '';
-        if($this->worked_time==- DAILY_TIME) return '-';
+        if(!$this->time1 && !isPastWorkday($this->work_date)) return '';
+        if($this->worked_time == DAILY_TIME) return '-';
 
         $balance = $this->worked_time - DAILY_TIME;
         $balanceString = getTimeStringFromSeconds(abs($balance));
@@ -110,7 +108,7 @@ class WorkingHours extends Model {
         return "{$sign}{$balanceString}";
     }
 
-    public static function getAbsentUser() {
+    public static function getAbsentUsers() {
         $today = new DateTime();
         $result = Database::getResultFromQuery("
             SELECT name FROM users
@@ -138,17 +136,17 @@ class WorkingHours extends Model {
         $result = static::getResultSetFromSelect([
             'raw' => "work_date BETWEEN '{$startDate}' AND '{$endDate}'"
         ], "sum(worked_time) as sum");
-        return $result->fetch_assoc() ['sum'];
+        return $result->fetch_assoc()['sum'];
     }
 
     public static function getMonthlyReport($userId, $date) {
         $registries = [];
         $startDate = getFirstDayOfMonth($date)->format('Y-m-d');
-        $endtDate = getLastDayOfMonth($date)->format('Y-m-d');
+        $endDate = getLastDayOfMonth($date)->format('Y-m-d');
 
         $result = static::getResultSetFromSelect([
             'user_id' => $userId,
-            'raw' => "work_date between '{$startDate}' AND '{{$endDate}'"
+            'raw' => "work_date between '{$startDate}' AND '{$endDate}'"
         ]);
 
         if($result) {
@@ -156,7 +154,7 @@ class WorkingHours extends Model {
                 $registries[$row['work_date']] = new WorkingHours($row);
             }
         }
-
+        
         return $registries;
     }
 
@@ -170,5 +168,4 @@ class WorkingHours extends Model {
 
         return $times;
     }
-
 }
