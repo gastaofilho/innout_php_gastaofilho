@@ -60,7 +60,7 @@
 					<td>Saldo Mensal</td>
 					<td><?= $balance ?></td>
 				</tr>
-			</tbody>	
+			</tbody>
 		</table>
 	</div>
 </main>

@@ -31,13 +31,13 @@
                             class="btn btn-warning rounded-circle mr-2">
                             <i class="icofont-edit"></i>
                         </a>
-                        <a href="?delete=<?=$user->id ?>" 
+                        <a href="?delete=<?=$user->id ?>"
                             class="btn btn-danger rounded-circle">
                             <i class="icofont-trash"></i>
                         </a>
                     </td>
                 </tr>
-                <?php endforeach ?>
+            <?php endforeach ?>
         </tbody>
     </table>
 </main>

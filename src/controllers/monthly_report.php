@@ -29,8 +29,8 @@ $workDay = 0;
 $sumOfWorkedTime = 0;
 $lasDay = getLastDayOfMonth($selectedPeriod)->format('d');
 
-for($day = 1; $day <= $lasDay; $day++) {
-    $day = $selectedPeriod . '-' . sprintf('%02d', $day);
+for($day = 1; $day <= $lastDay; $day++) {
+    $date = $selectedPeriod . '-' . sprintf('%02d', $day);
     $registry = $registries[$date];
 
     if(isPastWorkday($date)) $workDay++;
@@ -50,7 +50,7 @@ $expectedTime = $workDay * DAILY_TIME;
 $balance = getTimeStringFromSeconds(abs($sumOfWorkedTime - $expectedTime));
 $sign = ($sumOfWorkedTime >= $expectedTime) ? '+' : '-';
 
-loadTemplateView('monthly_report.php', [
+loadTemplateView('monthly_report', [
     'report' => $report,
     'sumOfWorkedTime' => getTimeStringFromSeconds($sumOfWorkedTime),
     'balance' => "{$sign}{$balance}",
